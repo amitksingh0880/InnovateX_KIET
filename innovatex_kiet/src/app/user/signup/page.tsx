@@ -123,9 +123,9 @@ export default function Signup() {
     // If user is in the verification stage, show the token input
     if (isVerifying) {
         return (
-            <div className="min-h-screen flex items-center justify-center bg-gray-100">
-                <div className="bg-white p-8 rounded shadow-md w-full max-w-md">
-                    <h1 className="text-2xl font-bold mb-6 text-center">Verify Your Email</h1>
+            <div className="flex items-center justify-center bg-gray-100">
+                <div className="bg-white rounded shadow-md w-full max-w-md">
+                    <h1 className="text-2xl font-bold  text-center">Verify Your Email</h1>
                     {error && <p className="text-red-500 mb-4">{error}</p>}
                     <form onSubmit={handleVerifyEmail}>
                         <div className="mb-4">
@@ -158,7 +158,8 @@ export default function Signup() {
 
     // If not verifying, show the signup form
     return (
-        <div className="min-h-screen flex items-center justify-center bg-gray-100">
+        <div className="flex items-center justify-center rounded-full bg-gray-100">
+            {/* <h1>Hello</h1> */}
             <div className="bg-white p-8 rounded shadow-md w-full max-w-md">
                 <h1 className="text-2xl font-bold mb-6 text-center">Register</h1>
                 {error && <p className="text-red-500 mb-4">{error}</p>}
