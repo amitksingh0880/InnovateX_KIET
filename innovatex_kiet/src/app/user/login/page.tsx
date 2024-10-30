@@ -4,7 +4,7 @@ import { useState } from 'react'; // Import useState to manage component state
 import { useRouter } from 'next/navigation'; // Import useRouter for client-side routing
 import { useDispatch } from 'react-redux'; // Redux hook to dispatch actions
 import PrivateRoute from '@/components/privateRoute'; // Import the PrivateRoute component for protected routes
-import { loginUser } from '@/lib/Redux/slices/userSlice'; // Import loginUser action from the user slice
+import { loginUser, setUserId, setUsername } from '@/lib/Redux/slices/userSlice'; // Import loginUser action from the user slice
 
 // Define the Login component
 export default function Login() {
@@ -45,6 +45,11 @@ export default function Login() {
       });
 
       const data = await res.json(); // Parse the response data
+      const userId = data.userId; // Assuming your response contains the userId
+      
+      // Dispatch the userId to the Redux store
+      dispatch(setUserId(userId)); 
+      dispatch(setUsername(data.username));
 
       // Check if the response is not OK (indicates an error)
       if (!res.ok) {

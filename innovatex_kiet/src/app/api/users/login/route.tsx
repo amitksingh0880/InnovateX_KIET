@@ -35,11 +35,12 @@
 //     }
 // }
 
-import User from "@/models/user";
+// import User from "@/models/user";
 import { NextRequest, NextResponse } from "next/server";
 import bcryptjs from "bcryptjs";
 import JWT from "jsonwebtoken";
 import { connectToDatabase } from "@/lib/mongodb";
+import User from "@/models/user";
 
 connectToDatabase();
 
@@ -90,7 +91,7 @@ export async function POST(request: NextRequest) {
     });
 
     // Return the response
-    return response;
+    return NextResponse.json({ success: true, userId: user._id, username: user.name });
   } catch (error: any) {
     // Return error response
     return NextResponse.json({ error: error.message }, { status: 500 });

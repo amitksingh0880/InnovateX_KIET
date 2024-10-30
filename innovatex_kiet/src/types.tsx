@@ -8,7 +8,9 @@ export type SideNavItem = {
 };
 export type FeedItem = {
   _id: string;
+  userId: string;
   author: string;
+  username: string;
   title: string;
   content: string;
   images: string[];

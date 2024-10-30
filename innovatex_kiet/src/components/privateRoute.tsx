@@ -13,7 +13,7 @@ const PrivateRoute: React.FC<{ children: React.ReactNode }> = ({ children }) => 
     if (isAuthenticated === null) return;
 
     if (isAuthenticated === false) {
-      router.push('/user/signup'); // Redirect if not authenticated
+      router.push('/user/landingPage'); // Redirect if not authenticated
     } else {
       setIsLoading(false); // No redirect, so stop loading
     }

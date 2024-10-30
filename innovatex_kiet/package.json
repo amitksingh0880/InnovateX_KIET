@@ -24,6 +24,7 @@
     "mongodb": "^6.9.0",
     "mongoose": "^8.6.3",
     "next": "13.5.4",
+    "next-auth": "^4.24.10",
     "next-redux-wrapper": "^8.1.0",
     "next-themes": "^0.3.0",
     "node-fetch": "^3.3.2",

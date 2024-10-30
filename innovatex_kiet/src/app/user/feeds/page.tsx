@@ -8,6 +8,7 @@ import { RootState } from '@/lib/Redux/store';
 
 interface FeedItem {
   _id: string;
+  username: string;
   content: string;
   createdAt: string;
   images: string[];
@@ -21,18 +22,26 @@ interface FeedItem {
 const DashboardPage = () => {
   const [feed, setFeed] = useState<FeedItem[]>([]);
   const [error, setError] = useState<string | null>(null);
-  
+
   // Get username from Redux
   const username = useSelector((state: RootState) => state.user.username);
-  console.log("user"+username);
-  
+  const userId = useSelector((state: RootState) => state.user.userId);
+  // console.log("user=="+username);
+
 
   useEffect(() => {
     const fetchFeed = async () => {
       try {
         const res = await fetch('/api/posts');
         if (!res.ok) throw new Error('Failed to fetch feed data');
-        const data: { data: FeedItem[] } = await res.json();
+        const data = await res.json();
+        console.log("front" + data.data.toString())
+        const formattedData = data.data.map((item: any) => ({
+          ...item,
+          createdAt: new Date(item.createdAt).toLocaleString(),
+          updatedAt: new Date(item.updatedAt).toLocaleString(),
+        }));
+        console.log("Formatted Data:", formattedData);
         setFeed(data.data);
       } catch (error) {
         console.error('Error:', error);
@@ -43,15 +52,36 @@ const DashboardPage = () => {
     fetchFeed();
   }, []);
 
-  const handleUpvote = (postId: string) => {
-    setFeed(feed.map(post => {
-      if (post._id === postId) {
-        const updatedUpvotes = post.isUpvoted ? post.upvotes.slice(0, -1) : [...post.upvotes, username]; // Add username to upvotes
-        return { ...post, upvotes: updatedUpvotes, isUpvoted: !post.isUpvoted };
-      }
-      return post;
-    }));
-  };
+  interface UpvoteResponse {
+    upvotes: (string | null)[];
+  }
+
+  const handleUpvote = async (postId: string, userId: string) => {
+    const response = await fetch('/api/posts/upvote', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ postId, userId }),
+    });
+
+    if (response.ok) {
+        const { upvotes }: UpvoteResponse = await response.json();
+
+        // Check if the upvotes array is empty and set isUpvote accordingly
+        const isUpvote = upvotes.length === 0; // Set to true if upvotes are empty
+
+        // Update your UI state with the new upvotes
+        setFeed(feed.map(post =>
+            post._id === postId ? { ...post, upvotes, isUpvote } : post
+        ));
+    } else {
+        console.error('Failed to upvote', await response.json());
+    }
+};
+
+
+
 
   const handleCreatePost = (newPost: FeedItem) => {
     setFeed([newPost, ...feed]);
@@ -83,10 +113,10 @@ const DashboardPage = () => {
                 <div key={post._id} className="p-6 bg-white shadow rounded-lg hover:bg-gray-50 transition-all dark:text-white dark:bg-gray-900 dark:border border-white">
                   <div className="flex items-center mb-3 dark:text-white dark:bg-gray-900">
                     <div className="w-12 h-12 bg-gray-300 rounded-full flex-shrink-0 overflow-hidden">
-                      <img src={`https://ui-avatars.com/api/?name=${username}&background=random`} alt="User Avatar" className="w-full h-full object-cover" />
+                      <img src={`https://ui-avatars.com/api/?name=${post.username}&background=random`} alt="User Avatar" className="w-full h-full object-cover" />
                     </div>
                     <div className="ml-4">
-                      <h2 className="font-semibold text-lg">{username}</h2> {/* Display username here */}
+                      <h2 className="font-semibold text-lg">{post.username}</h2> {/* Display username here */}
                       <h3 className="font-medium text-md">{post.title}</h3> {/* Display post title here */}
                       <span className="text-sm text-gray-500">{new Date(post.createdAt).toLocaleTimeString()}</span>
                     </div>
@@ -102,7 +132,7 @@ const DashboardPage = () => {
                   <div className="flex items-center justify-between">
                     <div className="flex items-center">
                       <button
-                        onClick={() => handleUpvote(post._id)}
+                        onClick={() => userId && handleUpvote(post._id, userId)}
                         className={`flex items-center ${post.isUpvoted ? 'text-red-500' : 'text-gray-500'} mr-4`}
                         aria-label={post.isUpvoted ? 'Remove upvote' : 'Upvote'}
                       >

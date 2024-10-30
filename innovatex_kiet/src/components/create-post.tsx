@@ -1,7 +1,8 @@
-// /components/create-post.tsx
+import { RootState } from '@/lib/Redux/store';
 import { FeedItem } from '@/types';
 import { useState } from 'react';
 import { FaRegImage, FaFileAlt, FaHandsHelping } from 'react-icons/fa';
+import { useSelector } from 'react-redux';
 
 interface CreatePostProps {
   onCreate: (post: FeedItem) => void;
@@ -10,13 +11,18 @@ interface CreatePostProps {
 const CreatePost = ({ onCreate }: CreatePostProps) => {
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
-
+  const userId = useSelector((state: RootState) => state.user.userId) || 'defaultUserId'; // Fallback to a default userId for debugging
+  const username = useSelector((state: RootState) => state.user.username) || 'defaultUsername';
+  console.log("User ID:", userId);
+  
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     const newPost: FeedItem = {
-      _id: new Date().toISOString(),
-      author: 'user_id',
+      _id: new Date().toISOString(), // Temporary ID; consider using a UUID or letting MongoDB generate it
+      author: userId, // Use userId as the author
+      userId: userId,
+      username: username, // Add a default username or fetch it from the state
       content,
       createdAt: new Date().toISOString(),
       images: [],
@@ -56,7 +62,7 @@ const CreatePost = ({ onCreate }: CreatePostProps) => {
   return (
     <div className="flex flex-col md:flex-row items-center p-4 bg-white shadow-sm rounded-lg dark:text-white dark:bg-gray-900 dark:border border-white">
       <img
-      src="/path/to/profile.jpg" // Replace with actual user profile path
+        src="/path/to/profile.jpg"
         alt="User"
         className="w-10 h-10 rounded-full border border-black object-cover dark:border-white"
       />

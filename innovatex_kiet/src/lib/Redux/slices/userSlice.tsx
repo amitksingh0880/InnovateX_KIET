@@ -5,12 +5,14 @@ interface UserState {
   auth: boolean;
   email: string | null;
   username: string | null; // New field added
+  userId: string | null;
 }
 
 const initialState: UserState = {
   auth: false,
   email: null,
   username: null, // Initialize username as null
+  userId: null,
 };
 
 const userSlice = createSlice({
@@ -25,13 +27,17 @@ const userSlice = createSlice({
       state.auth = false;
       state.email = null;
       state.username = null; // Clear the username on logout
+      state.userId = null;
     },
     setUsername(state, action: PayloadAction<string>) {
       state.username = action.payload;
-    }
+    },
+    setUserId(state, action: PayloadAction<string>) {
+      state.userId = action.payload;
+    },
   },
 });
 
-export const { loginUser, logoutUser, setUsername } = userSlice.actions;
+export const { loginUser, logoutUser, setUsername ,setUserId} = userSlice.actions;
 
 export default userSlice.reducer;

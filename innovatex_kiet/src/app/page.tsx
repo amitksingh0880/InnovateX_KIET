@@ -1,14 +1,16 @@
 "use client";
-import { useState } from 'react';
-import { FeedItem} from '../types';
-import { FiHeart, FiBookmark } from 'react-icons/fi';
-import CreatePost from '@/components/create-post';
+import Hero from '@/components/landingPage/Hero';
+import Header from '@/components/landingPage/Header';
+import ProductShowcase from '@/components/landingPage/ProductShowcase';
+import ProductCard from '@/components/landingPage/ProductCard';
+import Testimonials from '@/components/landingPage/Testimonials';
+import CTA from '@/components/landingPage/CTA';
+import Footer from '@/components/landingPage/Footer';
 
 const Home = () => {
   return (
-   <>
-   <p className='text-black dark:text-white'>home</p>
-   </>
+    <div>
+    </div>
   );
 };
 

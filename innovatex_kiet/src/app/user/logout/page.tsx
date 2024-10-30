@@ -7,7 +7,7 @@ import PrivateRoute from '@/components/privateRoute';
 const LogoutPage: React.FC = () => {
   return (
     <PrivateRoute>
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
+    <div className="flex flex-col items-center justify-center mt-56">
       <h1 className="text-3xl font-bold mb-6">Logout Page</h1>
       <LogoutButton />
     </div>

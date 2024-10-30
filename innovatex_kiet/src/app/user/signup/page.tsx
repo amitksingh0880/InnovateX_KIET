@@ -4,7 +4,6 @@ import { useState } from "react"; // Import the useState hook
 import { useRouter } from "next/navigation"; // Import router for navigation
 import PrivateRoute from "@/components/privateRoute";
 import { useDispatch } from "react-redux";
-import { setUsername } from "@/lib/Redux/slices/userSlice";
 
 export default function Signup() {
     const router = useRouter();
@@ -54,7 +53,7 @@ export default function Signup() {
     // Handle form submission for user registration
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        dispatch(setUsername(name));
+        // dispatch(setUsername(name));
         setLoading(true);
         setError(null);
 

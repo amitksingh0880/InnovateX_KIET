@@ -29,7 +29,7 @@ const LogoutButton: React.FC = () => {
 
       dispatch(logoutUser());
       // Redirect to the login page after successful logout
-      router.push('/users/login');
+      router.push('/landingpage');
     } catch (err: any) {
       setError(err.message);
     } finally {

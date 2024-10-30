@@ -14,7 +14,7 @@ interface Helper {
 const ProfilePage = () => {
     return (
         <PrivateRoute>
-        <div className="p-4">
+        <div className="flex flex-col bg-gray-100 dark:text-white dark:bg-gray-900">
                 <Profile
                     name="profile"
                     email="email"
