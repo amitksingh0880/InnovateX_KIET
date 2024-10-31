@@ -1,3 +1,4 @@
+import Image, { StaticImageData } from 'next/image';
 import React, { useState } from 'react';
 
 interface Experience {
@@ -14,7 +15,7 @@ interface ProfileProps {
   degree: string;
   batch: number;
   college: string;
-  profileImage: string;
+  profileImage: StaticImageData;
   level: number;
   experiences: Experience[];
 }
@@ -28,9 +29,10 @@ const Profile: React.FC<ProfileProps> = ({
   college,
   profileImage,
   level,
-  experiences,
+  experiences: initialExperiences,
 }) => {
   const [isEditing, setIsEditing] = useState(false);
+  const [experiences, setExperiences] = useState<Experience[]>(initialExperiences);
   const [newExperience, setNewExperience] = useState<Experience>({
     id: experiences.length + 1,
     company: '',
@@ -44,9 +46,9 @@ const Profile: React.FC<ProfileProps> = ({
   };
 
   const handleAddExperience = () => {
-    experiences.push(newExperience);
+    setExperiences([...experiences, newExperience]);
     setNewExperience({
-      id: experiences.length + 1,
+      id: experiences.length + 2, // Ensures the ID is unique for the next entry
       company: '',
       role: '',
       duration: '',
@@ -55,32 +57,35 @@ const Profile: React.FC<ProfileProps> = ({
   };
 
   return (
-    <div className="relative min-h-screen bg-gradient-to-br from-purple-600 to-indigo-600 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+    <div className="h-screen w-screen bg-gray-200 ml-96">
       <div className="max-w-4xl w-full bg-white shadow-2xl rounded-lg p-8 overflow-hidden transform transition-transform duration-500 hover:scale-105">
-        
+
         {/* Header */}
         <div className="flex justify-between items-center mb-4">
-          <h2 className="text-3xl font-bold text-gray-900">Profile Dashboard</h2>
+          <h2 className="text-3xl font-bold text-gray-900">Profile</h2>
           <p className="text-sm text-gray-500">Last Updated on 22/09/2024 | 04:18 PM</p>
         </div>
-        
+
         {/* Banner & Profile Image */}
         <div className="relative">
           <div className="h-32 bg-gradient-to-r from-green-400 via-blue-500 to-purple-500 rounded-lg"></div>
           <div className="absolute -bottom-16 left-8 w-32 h-32">
-            <img
+            <Image
               src={profileImage}
               alt={name}
+              width={128} // Set the desired width in pixels
+              height={128} // Set the desired height in pixels
               className="w-32 h-32 rounded-full border-4 border-white shadow-lg object-cover"
             />
+
           </div>
         </div>
-        
+
         {/* Profile Details */}
         <div className="mt-20 text-center">
           <h3 className="text-4xl font-extrabold text-gray-900">{name}</h3>
           <p className="text-sm text-gray-600 mt-2">{email}</p>
-          
+
           {/* Profile Stats */}
           <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-4 text-gray-700">
             <div className="bg-gray-100 p-4 rounded-lg shadow">
@@ -100,7 +105,7 @@ const Profile: React.FC<ProfileProps> = ({
               <p className="mt-1 text-lg">{college}</p>
             </div>
           </div>
-          
+
           {/* Level and Skill Progress */}
           <div className="mt-10 flex justify-center items-center space-x-8">
             <span className="px-4 py-2 bg-purple-100 text-purple-700 rounded-full text-sm">Beginner</span>
@@ -124,7 +129,7 @@ const Profile: React.FC<ProfileProps> = ({
                 </li>
               ))}
             </ul>
-            
+
             {isEditing ? (
               <div className="mt-6">
                 <input
