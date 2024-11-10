@@ -20,13 +20,43 @@ interface IUser extends Document {
     isAdmin: boolean;
     requestsMade: mongoose.Schema.Types.ObjectId[];
     requestsReceived: mongoose.Schema.Types.ObjectId[];
+    experiences: IExperience[];
+    registerNumber: string;
+    degree: String;
+    batch: Number;
+    college: String;
 }
+
+interface IExperience {
+    company: string;
+    role: string;
+    duration: string;
+    description: string;
+}
+
+const ExperienceSchema = new Schema<IExperience>({
+    company: {
+        type: String,
+        required: true
+    },
+    role: {
+        type: String,
+        required: true
+    },
+    duration: {
+        type: String,
+        required: true
+    },
+    description: {
+        type: String,
+        required: true
+    },
+})
 
 const userSchema: Schema<IUser> = new Schema({
     name: {
         type: String,
-        required: [true, "Please enter a username"],
-        unique: true,
+        required: [true, "Please enter a username"]
     },
     email: {
         type: String,
@@ -87,7 +117,15 @@ const userSchema: Schema<IUser> = new Schema({
         type: Boolean,
         default: false,
     },
-
+    registerNumber: {
+        type: String
+    },
+    batch: {
+        type: String
+    },
+    college: {
+        type: String
+    },
     forgetPasswordToken: String,
     forgetPasswordTokenExpiry: Date,
     verifyToken: String,
@@ -96,6 +134,7 @@ const userSchema: Schema<IUser> = new Schema({
         type: Date,
         default: Date.now
     },
+    experiences: [ExperienceSchema],
 });
 
 // const User = mongoose.models.Post || mongoose.model<IUser>('Post', userSchema);

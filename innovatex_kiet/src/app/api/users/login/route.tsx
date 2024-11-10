@@ -89,6 +89,8 @@ export async function POST(request: NextRequest) {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
     });
+    console.log('tokenset'+token);
+    
 
     // Return the response
     return NextResponse.json({ success: true, userId: user._id, username: user.name });

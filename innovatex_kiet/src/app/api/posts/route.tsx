@@ -17,7 +17,7 @@ const connectDB = async () => {
 
 // Define types for request body
 interface PostBody {
-    userId: string; // Ensure userId is part of the request body
+    userId: string;
     title: string;
     content: string;
     images?: string[];
@@ -68,7 +68,7 @@ export async function POST(req: Request) {
 
         const newPost = new Post({
             userId,
-            author: userId, // Use userId from request body
+            author: userId, 
             title,
             content,
             images,

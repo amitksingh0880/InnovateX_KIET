@@ -46,6 +46,7 @@ export default function Login() {
 
       const data = await res.json(); // Parse the response data
       const userId = data.userId; // Assuming your response contains the userId
+      sessionStorage.setItem('userId', userId);
       
       // Dispatch the userId to the Redux store
       dispatch(setUserId(userId)); 

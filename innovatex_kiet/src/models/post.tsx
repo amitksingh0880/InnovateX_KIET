@@ -2,26 +2,26 @@ import mongoose, { Document, Schema } from "mongoose";
 
 interface IPost extends Document {
   author: mongoose.Schema.Types.ObjectId;
-  userId: string;  // Assuming this is a string for now
+  userId: string;
   content: string;
   title: string;
   likes: number;
-  images: string[]; // Change to string array for URLs
-  upvotes: mongoose.Schema.Types.ObjectId[];  // List of user ObjectIds who upvoted
+  images: string[];
+  upvotes: mongoose.Schema.Types.ObjectId[];
   createdAt: Date;
   updatedAt: Date;
-  department: string; // Consider if this is needed for your use case
+  department: string; 
 }
 
 const postSchema: Schema<IPost> = new Schema({
   author: {
     type: mongoose.Schema.Types.ObjectId,
-    required: true, // Uncommented to ensure every post has an author
+    required: true,
   },
   userId: {
     type: String,
     required: true,
-  },
+  },  
   title: {
     type: String,
     required: true,
