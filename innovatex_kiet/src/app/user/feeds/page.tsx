@@ -275,7 +275,7 @@ const DashboardPage = () => {
   // Handle profile click (save userId in sessionStorage and navigate)
   const handleProfileClick = (UserId: string) => {
     sessionStorage.setItem('profileUserId', UserId);  // Store the profile userId in sessionStorage
-    router.push(`/user/profile?userId=${userId}`);  // Navigate to the user's profile page
+    router.push(`/user/${UserId}/profile`);  // Navigate to the user's profile page
   };
 
   return (
