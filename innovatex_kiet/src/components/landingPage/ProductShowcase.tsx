@@ -1,6 +1,6 @@
 "use client";
 
-import ProductImage from "@/public/assests/landingPage/Product Image.png";
+import ProductImage from "@/public/assests/landingPage/productImageFeed.png";
 import Pyramid from "@/public/assests/landingPage/pyramid.png";
 import Tube from "@/public/assests/landingPage/tube.png";
 import { motion, useScroll, useTransform } from "framer-motion";
@@ -49,7 +49,7 @@ const ProductShowcase = () => {
             translateY: translateY,
           }}
         />
-        <Image src={ProductImage} alt="Product Image" className="px-1" />
+        <Image src={ProductImage} alt="Product Image" className="px-1 w-auto lg:w-[1200px]" />
         <motion.img
           src={Tube.src}
           alt="Tube Image"
