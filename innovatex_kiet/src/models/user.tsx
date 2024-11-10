@@ -118,13 +118,16 @@ const userSchema: Schema<IUser> = new Schema({
         default: false,
     },
     registerNumber: {
-        type: String
+        type: String,
+        default:"12345678"
     },
     batch: {
-        type: String
+        type: Number,
+        default: 2023-2025
     },
     college: {
-        type: String
+        type: String,
+        default: "XYZ College"
     },
     forgetPasswordToken: String,
     forgetPasswordTokenExpiry: Date,
