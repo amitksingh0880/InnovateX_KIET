@@ -229,16 +229,29 @@ export async function PUT(req: NextRequest) {
     }
 
     // Now that we have the userId, we can proceed with the logic to update the profile
-    const { db } = await connectToDatabase();
-    const { experiences } = await req.json();
+    const { username, email, registerNumber, degree, batch, college, level, experiences } = await req.json();
 
     if (!experiences || !Array.isArray(experiences)) {
       return NextResponse.json({ message: 'Invalid experiences data' }, { status: 400 });
     }
 
+    const updatePayload = {
+      username,
+      email,
+      registerNumber,
+      degree,
+      batch,
+      college,
+      level,
+      experiences,
+    };
+
+    // Connect to the database and update the user profile
+    const { db } = await connectToDatabase();
+
     const result = await db.collection('users').updateOne(
-      { _id: userId }, // Update the logged-in user's profile
-      { $set: { experiences } }
+      { _id: new ObjectId(userId) },
+      { $set: updatePayload }
     );
 
     if (result.matchedCount === 0) {

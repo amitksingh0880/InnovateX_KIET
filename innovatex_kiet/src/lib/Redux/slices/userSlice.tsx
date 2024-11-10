@@ -33,6 +33,7 @@ const userSlice = createSlice({
       state.username = action.payload;
     },
     setUserId(state, action: PayloadAction<string>) {
+      console.log("Setting userId:", action.payload);
       state.userId = action.payload;
     },
   },

@@ -1,4 +1,4 @@
-// Import necessary modules and functions
+
 import { connectToDatabase } from "@/lib/mongodb"; // Connect to the MongoDB database
 import User from "@/models/user"; // Import the User model (for accessing the user data in the database)
 import { NextRequest, NextResponse } from "next/server"; // Import Next.js request and response objects

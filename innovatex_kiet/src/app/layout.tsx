@@ -18,7 +18,8 @@ const inter = Inter({ subsets: ['latin'] });
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
-  const isLoginPage = pathname === '/user/login' || pathname === '/user/signup';
+  const isLoginPage = pathname === '/user/login' || pathname === '/user/signup' ||
+  pathname === "/user/afterEmailVerification";
 
   return (
     <html lang="en">

@@ -118,16 +118,13 @@ const userSchema: Schema<IUser> = new Schema({
         default: false,
     },
     registerNumber: {
-        type: String,
-        default:"12345678"
+        type: String
     },
     batch: {
-        type: Number,
-        default: 2023-2025
+        type: String
     },
     college: {
-        type: String,
-        default: "XYZ College"
+        type: String
     },
     forgetPasswordToken: String,
     forgetPasswordTokenExpiry: Date,
@@ -142,6 +139,5 @@ const userSchema: Schema<IUser> = new Schema({
 
 // const User = mongoose.models.Post || mongoose.model<IUser>('Post', userSchema);
 const User = mongoose.models.User || mongoose.model<IUser>('User', userSchema);
-
 
 export default User;

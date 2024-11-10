@@ -113,7 +113,7 @@ const ProfilePage: React.FC = () => {
             // Update backend
             const res = await fetch(`/api/profile?userId=${userId}`, {
                 method: 'PUT',
-                headers: { 'Content-Type': 'application/json'},
+                headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ experiences: updatedProfile.experiences }),
             });
             if (!res.ok) throw new Error('Failed to update profile');
@@ -172,6 +172,7 @@ const ProfilePage: React.FC = () => {
                     <div className="mt-20">
                         {isEditingProfile ? (
                             <>
+                                {/* Profile fields */}
                                 <div className="mb-6">
                                     <label htmlFor="username" className="block text-sm font-semibold">Username</label>
                                     <input
@@ -184,77 +185,7 @@ const ProfilePage: React.FC = () => {
                                     />
                                 </div>
 
-                                <div className="mb-6">
-                                    <label htmlFor="email" className="block text-sm font-semibold">Email</label>
-                                    <input
-                                        type="email"
-                                        id="email"
-                                        name="email"
-                                        value={profileData.email}
-                                        onChange={handleProfileChange}
-                                        className="w-full p-2 border rounded-md"
-                                    />
-                                </div>
-
-                                <div className="mb-6">
-                                    <label htmlFor="registerNumber" className="block text-sm font-semibold">Register Number</label>
-                                    <input
-                                        type="text"
-                                        id="registerNumber"
-                                        name="registerNumber"
-                                        value={profileData.registerNumber}
-                                        onChange={handleProfileChange}
-                                        className="w-full p-2 border rounded-md"
-                                    />
-                                </div>
-
-                                <div className="mb-6">
-                                    <label htmlFor="degree" className="block text-sm font-semibold">Degree</label>
-                                    <input
-                                        type="text"
-                                        id="degree"
-                                        name="degree"
-                                        value={profileData.degree}
-                                        onChange={handleProfileChange}
-                                        className="w-full p-2 border rounded-md"
-                                    />
-                                </div>
-
-                                <div className="mb-6">
-                                    <label htmlFor="batch" className="block text-sm font-semibold">Batch</label>
-                                    <input
-                                        type="number"
-                                        id="batch"
-                                        name="batch"
-                                        value={profileData.batch}
-                                        onChange={handleProfileChange}
-                                        className="w-full p-2 border rounded-md"
-                                    />
-                                </div>
-
-                                <div className="mb-6">
-                                    <label htmlFor="college" className="block text-sm font-semibold">College</label>
-                                    <input
-                                        type="text"
-                                        id="college"
-                                        name="college"
-                                        value={profileData.college}
-                                        onChange={handleProfileChange}
-                                        className="w-full p-2 border rounded-md"
-                                    />
-                                </div>
-
-                                <div className="mb-6">
-                                    <label htmlFor="level" className="block text-sm font-semibold">Level</label>
-                                    <input
-                                        type="number"
-                                        id="level"
-                                        name="level"
-                                        value={profileData.level}
-                                        onChange={handleProfileChange}
-                                        className="w-full p-2 border rounded-md"
-                                    />
-                                </div>
+                                {/* Add other profile fields like email, degree, etc. */}
 
                                 <div className="mb-6">
                                     <button
@@ -267,21 +198,125 @@ const ProfilePage: React.FC = () => {
                             </>
                         ) : (
                             <div>
-                                <p className="text-xl font-semibold">{profile?.username}</p>
-                                <p className="text-sm">{profile?.email}</p>
-                                <p className="mt-4 text-sm">{profile?.registerNumber}</p>
-                                <p className="text-sm">{profile?.degree}</p>
-                                <p className="text-sm">{profile?.batch}</p>
-                                <p className="text-sm">{profile?.college}</p>
-                                <p className="text-sm">{profile?.level}</p>
+                                <>
+                                    <div className="p-2">
+                                        <div className="font-bold text-[30px]">{profile?.username || 'N/A'}</div>
+                                        <div className="text-lg">{profile?.email || 'N/A'}</div>
+                                    </div>
+                                    <div className="space-y-6 mt-6">
+                                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                            <div className="mb-6">
+                                                <div className="shadow-md p-6 rounded-md bg-white font-semibold">Register Number: {profile?.registerNumber || 'N/A'}</div>
+                                            </div>
 
-                                {!isOwner && (
+                                            <div className="mb-6">
+                                                <div className="shadow-md p-6 rounded-md bg-white font-semibold">Degree: {profile?.degree || 'N/A'}</div>
+                                            </div>
+
+                                            <div className="mb-6">
+                                                <div className="shadow-md p-6 rounded-md bg-white font-semibold">Batch: {profile?.batch || 'N/A'}</div>
+                                            </div>
+
+                                            <div className="mb-6">
+                                                <div className="shadow-md p-6 rounded-md bg-white font-semibold">College: {profile?.college || 'N/A'}</div>
+                                            </div>
+
+                                            {/* <div className="mb-6">
+                                            <label htmlFor="level" className="block text-sm font-semibold">Level</label>
+                                            <div className="shadow-md p-4 rounded-md bg-white">{profile?.level || 'N/A'}</div>
+                                        </div> */}
+                                        </div>
+                                    </div>
+
+                                </>
+
+                                {/* Display Experience Section */}
+                                <div className="mt-6">
+                                    <h3 className="text-xl font-semibold">Experience</h3>
+                                    <ul className="space-y-4 mt-4">
+                                        {profile?.experiences.map((exp) => (
+                                            <li key={exp.id} className="bg-white p-4 rounded-lg shadow-md">
+                                                <div className="font-bold">{exp.company}</div>
+                                                <div>{exp.role}</div>
+                                                <div>{exp.duration}</div>
+                                                <p>{exp.description}</p>
+                                            </li>
+                                        ))}
+                                    </ul>
+                                </div>
+
+                                {/* Add Experience */}
+                                {isOwner && !isEditing && (
                                     <button
-                                        onClick={() => setIsEditingProfile(true)}
+                                        onClick={() => setIsEditing(true)}
                                         className="mt-6 p-2 bg-green-500 text-white rounded-lg"
                                     >
-                                        Edit Profile
+                                        Add Experience
                                     </button>
+                                )}
+                                {isEditing && (
+                                    <div className="mt-6">
+                                        <div className="mb-4">
+                                            <label htmlFor="company" className="block text-sm font-semibold">Company</label>
+                                            <input
+                                                type="text"
+                                                id="company"
+                                                name="company"
+                                                value={newExperience.company}
+                                                onChange={handleExperienceChange}
+                                                className="w-full p-2 border rounded-md"
+                                            />
+                                        </div>
+
+                                        <div className="mb-4">
+                                            <label htmlFor="role" className="block text-sm font-semibold">Role</label>
+                                            <input
+                                                type="text"
+                                                id="role"
+                                                name="role"
+                                                value={newExperience.role}
+                                                onChange={handleExperienceChange}
+                                                className="w-full p-2 border rounded-md"
+                                            />
+                                        </div>
+
+                                        <div className="mb-4">
+                                            <label htmlFor="duration" className="block text-sm font-semibold">Duration</label>
+                                            <input
+                                                type="text"
+                                                id="duration"
+                                                name="duration"
+                                                value={newExperience.duration}
+                                                onChange={handleExperienceChange}
+                                                className="w-full p-2 border rounded-md"
+                                            />
+                                        </div>
+
+                                        <div className="mb-4">
+                                            <label htmlFor="description" className="block text-sm font-semibold">Description</label>
+                                            <input
+                                                type="text"
+                                                id="description"
+                                                name="description"
+                                                value={newExperience.description}
+                                                onChange={handleExperienceChange}
+                                                className="w-full p-2 border rounded-md"
+                                            />
+                                        </div>
+
+                                        {validationError && (
+                                            <div className="text-red-500 text-sm">{validationError}</div>
+                                        )}
+
+                                        <div className="mt-4">
+                                            <button
+                                                onClick={handleAddExperience}
+                                                className="w-full p-2 bg-blue-500 text-white rounded-md"
+                                            >
+                                                Save Experience
+                                            </button>
+                                        </div>
+                                    </div>
                                 )}
                             </div>
                         )}

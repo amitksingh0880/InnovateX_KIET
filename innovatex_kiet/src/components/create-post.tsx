@@ -11,8 +11,8 @@ interface CreatePostProps {
 const CreatePost = ({ onCreate }: CreatePostProps) => {
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
-  const userId = useSelector((state: RootState) => state.user.userId) || 'defaultUserId'; // Fallback to a default userId for debugging
-  const username = useSelector((state: RootState) => state.user.username) || 'defaultUsername';
+  const userId = useSelector((state: RootState) => state.user.userId);
+  const username = useSelector((state: RootState) => state.user.username);
   console.log("User ID:", userId);
   
   const handleSubmit = async (e: React.FormEvent) => {
@@ -20,9 +20,9 @@ const CreatePost = ({ onCreate }: CreatePostProps) => {
 
     const newPost: FeedItem = {
       _id: new Date().toISOString(), // Temporary ID; consider using a UUID or letting MongoDB generate it
-      author: userId, // Use userId as the author
-      userId: userId,
-      username: username, // Add a default username or fetch it from the state
+      author: userId || '',
+      userId: userId || '',
+      username: username || '', // Add a default username or fetch it from the state
       content,
       createdAt: new Date().toISOString(),
       images: [],

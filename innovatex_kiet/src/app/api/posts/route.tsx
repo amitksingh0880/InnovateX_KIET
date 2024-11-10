@@ -45,7 +45,7 @@ export async function GET() {
             console.log("us" + username);
             return { ...post.toObject(), username };  // Add username to the post object
         }));
-
+         console.log(postsWithUsernames);       
         return NextResponse.json({ success: true, data: postsWithUsernames });
     } catch (error) {
         console.error(error);
